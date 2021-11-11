@@ -1,0 +1,8 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/u1442888/public_html/user"
+PassengerBaseURI "/user"
+PassengerNodejs "/home/u1442888/nodevenv/public_html/user/12/bin/node"
+PassengerAppType node
+PassengerStartupFile index.js
+PassengerAppLogFile "/home/u1442888/public_html/user/log/file-error.log"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END

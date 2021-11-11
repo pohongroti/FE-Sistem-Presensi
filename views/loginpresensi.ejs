@@ -1,0 +1,109 @@
+<!-- Ini Page Login.ejs -->
+<html>
+    <head>
+        <title>Pegawai | Login</title>
+        <link rel="stylesheet" href="./css/templatelogin.css"/>
+    </head>
+    <body>
+        <div class="container">
+            <div class="logo">
+                <img alt="logo sekolah" width="100px" src="./gambar/logo-smk.jpg"/>
+                <label>LOGIN PEGAWAI</label>
+                <span id="tglwaktu"></span>
+                <script>
+                      var waktu = new Date();
+                          var tahun = waktu.getFullYear();
+                          var bulan = waktu.getMonth();
+                          var tgl = waktu.getDate();
+                          var hari = waktu.getDay();
+                          var jam = waktu.getHours();
+                          var menit = waktu.getMinutes();
+                          var sekon = waktu.getSeconds();
+                          switch(bulan){
+                                  case 0:
+                                    bulan="JANUARI";
+                                    break;
+                                  case 1:
+                                      bulan="FEBRUARI";
+                                      break;
+                                  case 2:
+                                      bulan="MARET";
+                                      break;
+                                  case 3:
+                                      bulan="APRIL";
+                                      break;
+                                  case 4:
+                                      bulan="MEI";
+                                      break;
+                                  case 5:
+                                      bulan="JUNI";
+                                      break;
+                                  case 6:
+                                      bulan="JULI";
+                                      break;
+                                  case 7:
+                                      bulan="AGUSTUS";
+                                      break;
+                                  case 8:
+                                      bulan="SEPTEMBER";
+                                      break;
+                                  case 9:
+                                      bulan="OKTOBER";
+                                      break;
+                                  case 10:
+                                      bulan="NOPEMBER";
+                                      break;
+                                  case 11:
+                                      bulan="DESEMBER";
+                                      break;
+                                  default: 
+                                 }
+  
+                                 switch(hari){
+                                    case 0:
+                                      hari="AHAD";
+                                      break;
+                                  case 1:
+                                      hari="SENIN";
+                                      break;
+                                  case 2:
+                                      hari="SELASA";
+                                      break;
+                                  case 3:
+                                      hari="RABU";
+                                      break;
+                                  case 4:
+                                      hari="KAMIS";
+                                      break;
+                                  case 5:
+                                      hari="JUMAT";
+                                      break;
+                                  case 6:
+                                      hari="SABTU";
+                                      break;
+                                  default:   
+                                  }
+  
+                                  jam = ("0" + jam).slice(-2);
+                                  menit = ("0" + menit).slice(-2);
+                                  sekon = ("0" + sekon).slice(-2);
+  
+                                  dwaktu= " "+hari+", "+tgl+" "+bulan+" "+tahun+" "+jam+":"+menit+":"+sekon+" WIB";
+  
+                              document.getElementById("tglwaktu").innerHTML = dwaktu.toLocaleString();
+                </script>
+            </div>
+            <form action="/user/login" method="POST">
+                <div class="input">
+                    <label>Username</label>
+                    <input name="idpegawai" value="" type="text" placeholder="ID Pegawai" required/>
+                </div>
+                <div class="input">
+                        <label>Password</label>
+                        <input name="sandi" value="" type="password" placeholder="Password" required/>
+                </div>
+                <button class="button-full" type="submit">LOGIN</button>
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,152 @@
+<!-- Ini Page LogPresensiKeluar.ejs -->
+<html>
+    <head>
+        <title>Pegawai | Log Presensi Pulang</title>
+        <link rel="stylesheet" href="/user/css/templatelogpresensi.css"/>
+    </head>
+    <body>
+        <div class="container-top"></div>
+        <div class="container-header">
+            <div class="logo">
+                <a href="/user/beranda"><img alt="logo sekolah"  width="100px" src="/user/gambar/logo-smk.jpg"/></a>
+                <h3><label>LOG PRESENSI PULANG</label></h3>
+            </div>                    
+        </div>
+        <div class="container-content">
+            <label>Anda LogIn pada ID PEGAWAI <b><u><%= idpegawai %></u></b></label><br>
+            <label>Ini Halaman Log Presensi Pulang Front End Sistem Presensi Pegawai v1.0.0</label><br>
+            <label>Berikut Log Presensi Anda</label>
+<!--             <h4><a href="/presensimasuk">MASUK</a></h4>
+            <h4><a href="/presensikeluar">PULANG</a></h4>
+            <h4><a href="/presensilaporan">LAPORAN</a></h4> -->
+        </div>
+        <div class="container-footer">
+            <div class="bodytabelfooter">
+                <label><b>LOG PRESENSI PULANG</b></label>
+                    <div class="headertabelfooter">
+                        <span id="tglwaktukeluar"></span>
+                        <script>
+                                var waktu = new Date();
+                                    var tahun = waktu.getFullYear();
+                                    var bulan = waktu.getMonth();
+                                    var tgl = waktu.getDate();
+                                    var hari = waktu.getDay();
+                                    var jam = waktu.getHours();
+                                    var menit = waktu.getMinutes();
+                                    var sekon = waktu.getSeconds();
+        
+                                switch(bulan){
+                                    case 0:
+                                        bulan="Januari";
+                                        break;
+                                    case 1:
+                                        bulan="Februari";
+                                        break; 
+                                    case 2:
+                                        bulan="Maret";
+                                        break;
+                                    case 3:
+                                        bulan="April";
+                                        break;
+                                    case 4:
+                                        bulan="Mei";
+                                        break;
+                                    case 5:
+                                        bulan="Juni";
+                                        break;
+                                    case 6:
+                                        bulan="Juli";
+                                        break;
+                                    case 7:
+                                        bulan="Agustus";
+                                        break;
+                                    case 8:
+                                        bulan="September";
+                                        break;
+                                    case 9:
+                                        bulan="Oktober";
+                                        break;
+                                    case 10:
+                                        bulan="Nopember";
+                                        break;
+                                    case 11:
+                                        bulan="Desember";
+                                        break;
+                                    default:
+                                    }
+        
+                                switch(hari){
+                                    case 0:
+                                        hari="Ahad";
+                                        break;
+                                    case 1:
+                                        hari="Senin";
+                                        break;
+                                    case 2:
+                                        hari="Selasa";
+                                        break;
+                                    case 3:
+                                        hari="Rabu";
+                                        break;
+                                    case 4:
+                                        hari="Kamis";
+                                        break;
+                                    case 5:
+                                        hari="Jumat";
+                                        break;
+                                    case 6:
+                                        hari="Sabtu";
+                                        break;
+                                    default:   
+                                    }
+        
+                                    jam = ("0" + jam).slice(-2);
+                                    menit = ("0" + menit).slice(-2);
+                                    sekon = ("0" + sekon).slice(-2);
+        
+                                    dwaktu= "<b> Hari, Tanggal Waktu : "+hari+", "+tgl+" "+bulan+" "+tahun+" "+jam+":"+menit+":"+sekon+" WIB </b>";
+        
+                                    document.getElementById("tglwaktukeluar").innerHTML = dwaktu.toLocaleString();
+                        </script>
+                    </div>
+                <table border="3" bgcolor="white">
+                        <tr align="center">
+                            <th>ID PEGAWAI</th>
+                            <th>NAMA PEGAWAI</th>
+                            <th>JABATAN PEGAWAI</th>
+                            <th>TANGGAL/BULAN/TAHUN</th>
+                            <th>KOORDINAT LONGITUDE</th>
+                            <th>KOORDINAT LATITUDE</th>
+                            <th>STATUS</th>
+                            <th>SISTEM KERJA</th>
+                         </tr>
+                         <% if(logpresensikeluarData.length!=0) { 
+                            var i = 1;
+                            logpresensikeluarData.forEach(function(datakeluar){
+                        %>
+                        <tr align="center">
+                            <td><%= datakeluar.idpegawai %></td>
+                            <td><%= datakeluar.namapegawai %></td>
+                            <td><%= datakeluar.jabatanpegawai %></td>
+                            <td><%= datakeluar.tglwaktu %></td>
+                            <td><%= datakeluar.longitude %></td>
+                            <td><%= datakeluar.latitude %></td>
+                            <td><%= datakeluar.jenis_presensi %></td>
+                            <td><%= datakeluar.sistem_kerja %></td>
+                        </tr>
+                        <% i++; })} %>
+                </table>
+            </div>
+        </div>
+        <div class="borderbeforebottom"></div>
+        <div class="container-bottom">
+            <div class="bodytabelbottom">
+                
+                <div class="headertabelbottom">
+                    
+                </div>
+                
+            </div>
+        </div>    
+    </body>
+</html>
