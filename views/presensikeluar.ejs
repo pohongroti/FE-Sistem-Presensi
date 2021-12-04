@@ -1,159 +1,106 @@
 <!-- Ini Page PresensiKeluar.ejs -->
 <html>
     <head>
-        <title>Pegawai | Presensi Keluar</title>
-        <link rel="stylesheet" href="/user/css/templatepresensi.css"/>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Presensi Keluar</title>
+        <!--<link rel="stylesheet" href="/user/css/templatepresensi.css"/>-->
         <!--Import Library/API Maps Mapboxgl-->
         <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
         <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
         <!-- Library untuk menghitung jarak antar koordinat-->
         <script src="https://npmcdn.com/@turf/turf@5.1.6/turf.min.js"></script>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="container">
-            <div class="logo">
-                <a href="/user/beranda"><img alt="logo sekolah" width="100px" src="/user/gambar/logo-smk.jpg"/></a>
-                <h4><label>PRESENSI KELUAR PEGAWAI</label></h4>
-            </div>
+        <%- include('partials/navbar.ejs') %>
+        <main style="margin: 16px;">
             <form action="/user/addpresensikeluar" method="POST">
-                <div class="input">
-                    <label><b>PROFIL PEGAWAI</b></label>
-                    <table border="0" bgcolor="grey">
-                        <% if(pegawai.length!=0){ 
-                            var i = 1;
-                            pegawai.forEach(function(dataout){
-                         %>
-                        <tr>
-                            <td>ID PEGAWAI</td><td>: <b><u><%= dataout.idpegawai %></u></b></td>
-                        </tr>
-                        <tr>
-                            <td>NAMA PEGAWAI</td><td>: <b><u><%= dataout.namapegawai %></u></b></td>
-                        </tr>
-                        <tr>
-                            <td>JABATAN PEGAWAI</td><td>: <b><u><%= dataout.jabatanpegawai %></u></b></td>
-                        </tr>
-                        <% i++; })} %>
-                    </table>
+                <h1>Presensi Keluar</h1>
+                <% if(pegawai.length!=0){ 
+                    var i = 1;
+                    pegawai.forEach(function(dataout){
+                    %>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Nama</label>
+                        <input type="text" class="form-control" value="<%= dataout.namapegawai %>" readonly />
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Jabatan</label>
+                        <input type="text" class="form-control" value="<%= dataout.jabatanpegawai %>" readonly />
+                    </div>
+                <% i++; })} %>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label" style="display: block;">Sistem Kerja</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" value="WFH" name="sistemkerja" type="radio">
+                        <label class="form-check-label" for="inlineRadio1">WFH</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" value="WFO" name="sistemkerja" type="radio" checked="checked">
+                        <label class="form-check-label" for="inlineRadio2">WFO</label>
+                        </div>
                 </div>
-                <div class="input">
-                    <label>HARI, WAKTU DETAIL</label>
-                    <table border="0" bgcolor="grey">
-                        <tr>
-                            <th> <span id="tglwaktuout"></span> </th>
-                        </tr>
-                    </table>
-                <script>
-                      var waktu = new Date();
-                          var tahun = waktu.getFullYear();
-                          var bulan = waktu.getMonth();
-                          var tgl = waktu.getDate();
-                          var hari = waktu.getDay();
-                          var jam = waktu.getHours();
-                          var menit = waktu.getMinutes();
-                          var sekon = waktu.getSeconds();
-                          switch(bulan){
-                                  case 0:
-                                    bulan="JANUARI";
-                                    break;
-                                  case 1:
-                                      bulan="FEBRUARI";
-                                      break;
-                                  case 2:
-                                      bulan="MARET";
-                                      break;
-                                  case 3:
-                                      bulan="APRIL";
-                                      break;
-                                  case 4:
-                                      bulan="MEI";
-                                      break;
-                                  case 5:
-                                      bulan="JUNI";
-                                      break;
-                                  case 6:
-                                      bulan="JULI";
-                                      break;
-                                  case 7:
-                                      bulan="AGUSTUS";
-                                      break;
-                                  case 8:
-                                      bulan="SEPTEMBER";
-                                      break;
-                                  case 9:
-                                      bulan="OKTOBER";
-                                      break;
-                                  case 10:
-                                      bulan="NOPEMBER";
-                                      break;
-                                  case 11:
-                                      bulan="DESEMBER";
-                                      break;
-                                  default: 
-                                 }
-  
-                                 switch(hari){
-                                    case 0:
-                                      hari="AHAD";
-                                      break;
-                                  case 1:
-                                      hari="SENIN";
-                                      break;
-                                  case 2:
-                                      hari="SELASA";
-                                      break;
-                                  case 3:
-                                      hari="RABU";
-                                      break;
-                                  case 4:
-                                      hari="KAMIS";
-                                      break;
-                                  case 5:
-                                      hari="JUMAT";
-                                      break;
-                                  case 6:
-                                      hari="SABTU";
-                                      break;
-                                  default:   
-                                  }
-  
-                                  jam = ("0" + jam).slice(-2);
-                                  menit = ("0" + menit).slice(-2);
-                                  sekon = ("0" + sekon).slice(-2);
-  
-                                  dwaktu= " "+hari+", "+tgl+" "+bulan+" "+tahun+" "+jam+":"+menit+":"+sekon+" WIB";
-  
-                              document.getElementById("tglwaktuout").innerHTML = dwaktu.toLocaleString();
-                </script>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label" style="display: block;">Hari</label>
+                    <span class="fw-light" id="tglwaktuout"></span>
                 </div>
-                <div class="input">
-                    <label>SISTEM KERJA [Harus pilih salah satu]</label>
-                    <table border="0" bgcolor="grey">
-                        <tr>
-                            <th> <input value="WFH" name="sistemkerja" type="radio" />WFH </th>
-                            <td>||</td>
-                            <th> <input value="WFO" name="sistemkerja" type="radio" checked="checked"/>WFO </th>
-                        </tr>
-                    </table>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Upload Photo</label>
+                    <input class="form-control mb-3" id="uploadFoto" type="file" accept="image/*"/>
+                    <input class="form-control mb-3" id="foto" name="foto"/>
+                    <img alt='photo' style="width: 100%; display: none; max-width: 500px;" id="previewFoto" />
                 </div>
-                
-                <div class="input">
-                    <label>UPLOAD FOTO PEGAWAI ||
-                    <input id="foto" name="foto" type="file"/>
-                    </label>
-                </div>                
-                
-                <div class="input">
-                    <label>TITIK LOKASI PEGAWAI</label>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label" style="display: block;">Titik Lokasi</label>
                     <div id="map"></div> 
                     <input name="koordinat" hidden="active" value="" type="text"/>
                     <input id="longitude" name="longitude" hidden="active" type="text" />
                     <input id="latitude" name="latitude"   hidden="active" type="text" />
                 </div>
-
-                <button class="button-full" type="submit">PRESENSI</button>
+                <button class="mb-3 w-100 btn btn-lg btn-primary" type="submit">PRESENSI</button>
             </form>
-        </div>
-        <script>
+        </main>
+         <script>
+             var inputUploadFoto = document.querySelector('#uploadFoto');
+            var inputFoto = document.querySelector('#foto');
+            inputUploadFoto.onchange = function () {
+                var file = inputUploadFoto.files[0];
+                getBase64(file).then(
+                    data => {
+                        inputFoto.value = data
+                    }
+                ).catch(error => {
+                    console.log('error', error);
+                });
+                displayAsImage(file);
+            };
+            function displayAsImage(file) {
+                var imgURL = URL.createObjectURL(file),
+                    img = document.createElement('img');
+
+                img.onload = function() {
+                URL.revokeObjectURL(imgURL);
+                };
+
+                var previewFoto = document.querySelector('#previewFoto');
+                previewFoto.style.display = 'block';
+                previewFoto.src = imgURL;
+            }
+
+            function getBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
+                });
+                }
+
+         </script>
+         <script>
             // Setting Akses Token
             mapboxgl.accessToken = 'pk.eyJ1IjoicG9ob25ncm90aSIsImEiOiJja2xkd29pcnQxZWtnMnVxZTRuZ2FoMGNuIn0.FfqcsxR2VxqPgtj0ZuHtUw';
             // Inisialisasi Map
@@ -227,5 +174,87 @@
             getLocation();
             });
         </script>
+        <script>
+            var waktu = new Date();
+                var tahun = waktu.getFullYear();
+                var bulan = waktu.getMonth();
+                var tgl = waktu.getDate();
+                var hari = waktu.getDay();
+                var jam = waktu.getHours();
+                var menit = waktu.getMinutes();
+                var sekon = waktu.getSeconds();
+                switch(bulan){
+                        case 0:
+                          bulan="JANUARI";
+                          break;
+                        case 1:
+                            bulan="FEBRUARI";
+                            break;
+                        case 2:
+                            bulan="MARET";
+                            break;
+                        case 3:
+                            bulan="APRIL";
+                            break;
+                        case 4:
+                            bulan="MEI";
+                            break;
+                        case 5:
+                            bulan="JUNI";
+                            break;
+                        case 6:
+                            bulan="JULI";
+                            break;
+                        case 7:
+                            bulan="AGUSTUS";
+                            break;
+                        case 8:
+                            bulan="SEPTEMBER";
+                            break;
+                        case 9:
+                            bulan="OKTOBER";
+                            break;
+                        case 10:
+                            bulan="NOPEMBER";
+                            break;
+                        case 11:
+                            bulan="DESEMBER";
+                            break;
+                        default: 
+                       }
+
+                       switch(hari){
+                          case 0:
+                            hari="AHAD";
+                            break;
+                        case 1:
+                            hari="SENIN";
+                            break;
+                        case 2:
+                            hari="SELASA";
+                            break;
+                        case 3:
+                            hari="RABU";
+                            break;
+                        case 4:
+                            hari="KAMIS";
+                            break;
+                        case 5:
+                            hari="JUMAT";
+                            break;
+                        case 6:
+                            hari="SABTU";
+                            break;
+                        default:   
+                        }
+
+                        jam = ("0" + jam).slice(-2);
+                        menit = ("0" + menit).slice(-2);
+                        sekon = ("0" + sekon).slice(-2);
+
+                        dwaktu= " "+hari+", "+tgl+" "+bulan+" "+tahun+" "+jam+":"+menit+":"+sekon+" WIB";
+
+                    document.getElementById("tglwaktuout").innerHTML = dwaktu.toLocaleString();
+      </script>
     </body>
 </html>

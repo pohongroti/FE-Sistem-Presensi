@@ -5,9 +5,9 @@ const connectionKeKolam=mysql.createPool({
     connectionLimit: 100,
     host:'localhost',
     user:'root',
-    password:'',
-    database:'presensi',
-    debug:false
+    password:'rootpw',
+    database:'presensismk2kra',
+    debug:true
 });
 
 module.exports=connectionKeKolam;
